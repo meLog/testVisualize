@@ -1,17 +1,9 @@
 #include "applicationdata.h"
 
 
+ApplicationData::ApplicationData(QString name, QString url) : Application::Application(name, url), _startTime(0,0,0), _endTime(0,0,0) {}
+
 //Setter-------------------------------------------------------------------------
-void ApplicationData::setName(QString name)
-{
-    _name = name;
-}
-
-void ApplicationData::setUrl(QString url)
-{
-    _url = url;
-}
-
 void ApplicationData::setStartTime(QTime start)
 {
     _startTime = start;
@@ -24,23 +16,7 @@ void ApplicationData::setEndTime(QTime end)
 }
 
 
-void ApplicationData::setTotalTime(long totalTime)
-{
-    _totalTime = totalTime;
-}
-
-
 //Getter--------------------------------------------------------------------------
-QString ApplicationData::getName()
-{
-    return _name;
-}
-
-QString ApplicationData::getUrl()
-{
-    return _url;
-}
-
 QTime ApplicationData::getStartTime()
 {
     return _startTime;
@@ -49,17 +25,6 @@ QTime ApplicationData::getStartTime()
 QTime ApplicationData::getEndTime()
 {
     return _endTime;
-}
-
-
-long ApplicationData::getTotalTime()
-{
-    return _totalTime;
-}
-
-long ApplicationData::getTotalTimeAll()
-{
-    return _totalTimeAll;
 }
 
 

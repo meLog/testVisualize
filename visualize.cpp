@@ -1,6 +1,7 @@
 #include "visualize.h"
 #include "applicationdata.h"
 #include "chartdata.h"
+#include "application.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -8,7 +9,7 @@
 #include <QDebug>
 
 
-long ApplicationData::_totalTimeAll(0);
+long Application::_totalTimeAll(0);
 
 Visualize::Visualize()
 {

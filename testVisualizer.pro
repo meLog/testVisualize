@@ -10,11 +10,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     applicationdata.cpp \
     visualize.cpp \
-    chartdata.cpp
+    chartdata.cpp \
+    application.cpp
 
 
 HEADERS += \
     applicationdata.h \
     visualize.h \
-    chartdata.h
+    chartdata.h \
+    application.h
 

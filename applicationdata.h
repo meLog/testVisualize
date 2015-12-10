@@ -1,42 +1,24 @@
 #ifndef APPLICATIONDATA_H
 #define APPLICATIONDATA_H
 
-
-#include <QObject>
-#include <QString>
-#include <QTime>
-#include <QDebug>
-#include <QVector>
+#include "application.h"
 
 
-class ApplicationData
+class ApplicationData : public Application
 {
-QString _name, _url;
-QTime _startTime, _endTime;
-long _totalTime;
-
-static long _totalTimeAll;
-
-
+    QTime _startTime;
+    QTime _endTime;
 
 public:
-    ApplicationData(QString name = "", QString url = ""):
-                    _name(name), _url(url), _startTime(0,0), _endTime(0,0), _totalTime(0){}
+    explicit ApplicationData(QString name = "", QString url = "");
 
     //Setter
-    void setName(QString name);
-    void setUrl(QString url);
     void setStartTime(QTime start);
     void setEndTime(QTime end);
-    void setTotalTime(long totalTime);
 
     //Getter
-    QString getName();
-    QString getUrl();
     QTime getStartTime();
     QTime getEndTime();
-    long getTotalTime();
-    static long getTotalTimeAll();
 
     //Methodes
     void calcTimes();
