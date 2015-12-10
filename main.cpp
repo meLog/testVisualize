@@ -13,27 +13,33 @@ int main(int argc, char *argv[])
     //qDebug() << myVis.getChartDataVector()[4].getWhitelist()[0].getName() << myVis.getChartDataVector()[4].getWhitelist()[0].getTotalTime();
     //qDebug() << myVis.getChartDataVector()[4].getBlacklist()[0].getName() << myVis.getChartDataVector()[4].getBlacklist()[0].getTotalTime();
 
-    /*
+
     qDebug() << "";
     qDebug() << "-----------------Ausgabe-----------------";
     for(int i = 0; i < myVis.getChartDataVector().size(); i++){
         qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour();
     }
-    */
-    /*
+
+
     for(int i = 0; i < myVis.getChartDataVector().size(); i++){
+
         qDebug() << "--------Whitelist--------";
+        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
         for(int j = 0; j < myVis.getChartDataVector()[i].getWhitelist().size(); j++){
-        qDebug() << "Whitelist: " << j;
-        //    qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() << "Name: " << myVis.getChartDataVector()[i].getWhitelist()[j].getName() << "Zeit: " << myVis.getChartDataVector()[j].getWhitelist()[j].getTotalTime();
+            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
+                        "Name: " << myVis.getChartDataVector()[i].getWhitelist()[j].getName() <<
+                        "Zeit: " << myVis.getChartDataVector()[i].getWhitelist()[j].getTotalTime();
         }
+
         qDebug() << "--------Blacklist--------";
-        for(int j = 0; myVis.getChartDataVector()[i].getBlacklist().size(); j++){
-        qDebug() << "Blacklist: " << j;
-        //    qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() << "Name: " << myVis.getChartDataVector()[i].getBlacklist()[j].getName() << "Zeit: " << myVis.getChartDataVector()[j].getBlacklist()[j].getTotalTime();
+        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
+        for(int j = 0; j < myVis.getChartDataVector()[i].getBlacklist().size(); j++){
+            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
+                        "Name: " << myVis.getChartDataVector()[i].getBlacklist()[j].getName() <<
+                        "Zeit: " << myVis.getChartDataVector()[i].getBlacklist()[j].getTotalTime();
         }
     }
-    */
+
     return a.exec();
 }
 

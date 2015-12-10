@@ -79,7 +79,9 @@ void Visualize::handleDataFromString(QString filepath)
             qDebug() << "Prozess existiert bereits";
             if(_chartDataObjects[_lastChangeChart].getHour() == tempHour){
                 qDebug() << "Gleiche Stunde - Whitelist - ohne Ueberlauf";
-                setEndTimeAndCalc(_chartDataObjects[_lastChangeChart].getList(_lastChange), tempTime);
+                qDebug() << _chartDataObjects[_lastChangeChart].getHour() << "h - Whitelist: " << _lastChange << " - Nummer in Liste: " << _lastChangeApp;
+                _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
+                qDebug() << _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getTotalTime();
             } else {
                 qDebug() << "Verrechnen mit Nächste Stunde Whitelist";
                 hourDifference = tempHour - _chartDataObjects[_lastChangeChart].getHour();
@@ -87,8 +89,10 @@ void Visualize::handleDataFromString(QString filepath)
                     _calcHour = tempHour - hourDifference + i;
                     calcOverflow(_chartDataObjects[_lastChangeChart].getList(_lastChange));
                 }
-                setEndTimeAndCalc(_chartDataObjects[_lastChangeChart].getList(_lastChange), tempTime);
+                _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
             }
+            _lastChangeChart = _chartRef;
+            _lastChangeApp = tempChart.getList(_lastChange).size()-1;
         }
         //qDebug() << "Vor der if Abfrage" << _chartRef;
         //if instance with actual hour not exist
@@ -107,35 +111,27 @@ void Visualize::handleDataFromString(QString filepath)
             //qDebug() << "Log gestoppt";
             //qDebug() << "";
         } else if(_appRef != -1){
-            if(tempOnWhitelist){
-                //qDebug() << "Zeitsetzen Whitelist";
-                _chartDataObjects[_chartRef].getWhitelist()[_appRef].setStartTime(tempTime);
-                _lastChangeApp = _appRef;
-            } else {
-                //qDebug() << "Zeitsetzen Blacklist";
-                _chartDataObjects[_chartRef].getBlacklist()[_appRef].setStartTime(tempTime);
-                _lastChangeApp = _appRef;
-            }
+            _chartDataObjects[_chartRef].getList(tempOnWhitelist)[_appRef].setStartTime(tempTime);
+            _lastChangeApp = _appRef;
         } else {
             qDebug() << "Neues Objekt anlegen...";
             tempApp.setName(tempName);
             tempApp.setStartTime(tempTime);
             tempApp.setUrl(tempUrl);
+            _chartDataObjects[_chartRef].getList(tempOnWhitelist).append(tempApp);
+            _lastChangeApp = _chartDataObjects[_chartRef].getList(tempOnWhitelist).size()-1;
             if(tempOnWhitelist){
                 qDebug() << "...in die Whitelist";
-                _chartDataObjects[_chartRef].getWhitelist().append(tempApp);
-                _lastChangeApp = _chartDataObjects[_chartRef].getWhitelist().size()-1;
                 _lastChange = true;
             } else {
                 qDebug() << "...in die Blacklist";
-                _chartDataObjects[_chartRef].getBlacklist().append(tempApp);
-                _lastChangeApp = _chartDataObjects[_chartRef].getBlacklist().size()-1;
                 _lastChange = false;
             }
 
         }
     }
     file.close();
+    qDebug() << "ende";
 }
 
 void Visualize::findPosition(QString name, bool onWhitelist, int hour, int &chartRef, int &appRef, QString url)
@@ -188,7 +184,11 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
     QTime fullHour;
 
     fullHour.setHMS(_calcHour, 0, 0);
-    setEndTimeAndCalc(data, fullHour);
+    //setEndTimeAndCalc(data, fullHour);
+
+    tempApp.setName(data[_lastChangeApp].getName());
+    tempApp.setUrl(data[_lastChangeApp].getUrl());
+    tempApp.setStartTime(fullHour);
 
     qDebug() << "Neue Stunde - Whitelist/Blacklist - Ueberlauf";
     tempChart.setHour(_calcHour);
@@ -198,22 +198,22 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
     _chartRef = _chartDataObjects.size()-1;
 
     qDebug() << "Neues Objekt - Whitelist/Blacklist - Ueberlauf";
-    tempApp.setName(data[_lastChangeApp].getName());
-    tempApp.setUrl(data[_lastChangeApp].getUrl());
-    tempApp.setStartTime(fullHour);
-    data.append(tempApp);
+    tempChart.getList(_lastChange).append(tempApp);
 
-    _lastChangeChart = _chartRef;
-    _lastChangeApp = data.size()-1;
 }
 
-
+/*
 void Visualize::setEndTimeAndCalc(QVector<ApplicationData> &data, QTime time)
 {
+    qDebug() << data[_lastChangeApp].getName() <<
+                " totalTime before: " << data[_lastChangeApp].getTotalTime() <<
+                " totalTimeAll before: " << data[_lastChangeApp].getTotalTimeAll();
     data[_lastChangeApp].setEndTime(time);
     data[_lastChangeApp].calcTimes();
+    qDebug() << data[_lastChangeApp].getName() <<
+                " totalTime after: " << data[_lastChangeApp].getTotalTime() <<
+                " totalTimeAll after: " << data[_lastChangeApp].getTotalTimeAll();
 }
-
-
+*/
 
 

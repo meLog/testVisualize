@@ -20,6 +20,7 @@ void ApplicationData::setStartTime(QTime start)
 void ApplicationData::setEndTime(QTime end)
 {
     _endTime = end;
+    calcTimes();
 }
 
 
@@ -70,6 +71,8 @@ void ApplicationData::calcTimes()
     long tempTime;
 
     tempTime = _startTime.secsTo(_endTime);
+
+    qDebug() << tempTime;
 
     _totalTime += tempTime;
     _totalTimeAll += tempTime;
