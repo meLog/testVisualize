@@ -147,42 +147,16 @@ void Visualize::handleDataFromString(QString filepath)
 
 void Visualize::findPosition(QString name, bool onWhitelist, int hour, int &chartRef, int &appRef, QString url)
 {
-    if(onWhitelist){
-        for(int i = 0; i < _chartDataObjects.size(); i++){
-            if(hour == _chartDataObjects[i].getHour()){
-                //qDebug() << "findPosition - gleiche Stunde - Whitelist";
-                chartRef = i;
-                for(int j = 0; j < _chartDataObjects[i].getWhitelist().size(); j++){
-                    //qDebug() << "findPosition - ForSchleife - Whitelist";
-                    if(name  == _chartDataObjects[i].getWhitelist()[j].getName() && url == _chartDataObjects[i].getWhitelist()[j].getUrl()){
-                        appRef = j;
-                    } else {
-                        appRef = -1;
-                    }
+    chartRef = -1;
+    appRef = -1;
+
+    for(int i = 0; i < _chartDataObjects.size(); i++){
+        if(hour == _chartDataObjects[i].getHour()){
+            chartRef = i;
+            for(int j = 0; j < _chartDataObjects[i].getList(onWhitelist).size(); j++){
+                if(name  == _chartDataObjects[i].getList(onWhitelist)[j].getName() && url == _chartDataObjects[i].getList(onWhitelist)[j].getUrl()){
+                    appRef = j;
                 }
-            } else {
-                //qDebug() << "findPosition - nicht gleiche Stunde - Whitelist";
-                chartRef = -1;
-                appRef = -1;
-            }
-        }
-    } else {
-        for(int i = 0; i < _chartDataObjects.size(); i++){
-            if(hour == _chartDataObjects[i].getHour()){
-                //qDebug() << "findPosition - gleiche Stunde - Blacklist";
-                chartRef = i;
-                for(int j = 0; j < _chartDataObjects[i].getBlacklist().size(); j++){
-                    //qDebug() << "findPosition - ForSchleife - Whitelist";
-                    if(name  == _chartDataObjects[i].getBlacklist()[j].getName() && url == _chartDataObjects[i].getBlacklist()[j].getUrl()){
-                        appRef = j;
-                    } else {
-                        appRef = -1;
-                    }
-                }
-            } else {
-                //qDebug() << "findPosition - nicht gleiche Stunde - Blacklist";
-                chartRef = -1;
-                appRef = -1;
             }
         }
     }
@@ -195,7 +169,6 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
     QTime fullHour;
 
     fullHour.setHMS(_calcHour, 0, 0);
-    //setEndTimeAndCalc(data, fullHour);
 
     tempApp.setName(data[_lastChangeApp].getName());
     tempApp.setUrl(data[_lastChangeApp].getUrl());
@@ -221,19 +194,5 @@ int Visualize::findApplication(QString app)
     }
     return -1;
 }
-
-/*
-void Visualize::setEndTimeAndCalc(QVector<ApplicationData> &data, QTime time)
-{
-    qDebug() << data[_lastChangeApp].getName() <<
-                " totalTime before: " << data[_lastChangeApp].getTotalTime() <<
-                " totalTimeAll before: " << data[_lastChangeApp].getTotalTimeAll();
-    data[_lastChangeApp].setEndTime(time);
-    data[_lastChangeApp].calcTimes();
-    qDebug() << data[_lastChangeApp].getName() <<
-                " totalTime after: " << data[_lastChangeApp].getTotalTime() <<
-                " totalTimeAll after: " << data[_lastChangeApp].getTotalTimeAll();
-}
-*/
 
 
