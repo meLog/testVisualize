@@ -39,6 +39,9 @@ int main(int argc, char *argv[])
                         "Zeit: " << myVis.getChartDataVector()[i].getBlacklist()[j].getTotalTime();
         }
     }
+    for (int i=0; i < myVis.getAppclicationsVector().count(); i++)
+        qDebug() << "Application: " << myVis.getAppclicationsVector()[i].getName() <<
+                    " Zeit: " << myVis.getAppclicationsVector()[i].getTotalTime();
 
     return a.exec();
 }

@@ -1,12 +1,4 @@
 #include "visualize.h"
-#include "applicationdata.h"
-#include "chartdata.h"
-#include "application.h"
-
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QDebug>
 
 
 long Application::_totalTimeAll(0);
@@ -19,6 +11,11 @@ Visualize::Visualize()
 QVector<ChartData> &Visualize::getChartDataVector()
 {
     return _chartDataObjects;
+}
+
+QVector<Application> &Visualize::getAppclicationsVector()
+{
+    return _applications;
 }
 
 void Visualize::handleDataFromString(QString filepath)
@@ -77,6 +74,19 @@ void Visualize::handleDataFromString(QString filepath)
 
         //if an old object exist
         if(_lastChangeApp != -1){
+            int pos = findApplication(_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getName());
+            qDebug() << "application vector count before " << _applications.count();
+            qDebug() << "Position in application vector" << pos;
+            //if application not in application vector
+            if (pos == -1) {
+                Application temp(_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getName());
+                _applications.append(temp);
+                pos = _applications.count() - 1;
+            }
+            //add time to application vector
+            _applications[pos].addTotalTime(_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getStartTime().secsTo(tempTime));
+            qDebug() << "application vector count after " << _applications.count();
+
             qDebug() << "Prozess existiert bereits";
             if(_chartDataObjects[_lastChangeChart].getHour() == tempHour){
                 qDebug() << "Gleiche Stunde - Whitelist - ohne Ueberlauf";
@@ -201,6 +211,15 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
     qDebug() << "Neues Objekt - Whitelist/Blacklist - Ueberlauf";
     tempChart.getList(_lastChange).append(tempApp);
 
+}
+
+int Visualize::findApplication(QString app)
+{
+    for (int i=0; i < _applications.count(); i++) {
+        if (app == _applications[i].getName())
+            return i;
+    }
+    return -1;
 }
 
 /*

@@ -23,12 +23,12 @@ public:
     void setName(QString name);
     void setUrl(QString url);
     void setTotalTime(long totalTime);
+    void addTotalTime(long totalTime);
 
     //Getter
     QString getName();
     QString getUrl();
     long getTotalTime();
-
     static long getTotalTimeAll();
 
 signals:

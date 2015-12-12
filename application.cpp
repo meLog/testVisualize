@@ -16,6 +16,11 @@ void Application::setTotalTime(long totalTime)
     _totalTime = totalTime;
 }
 
+void Application::addTotalTime(long totalTime)
+{
+    _totalTime += totalTime;
+}
+
 
 //Getter--------------------------------------------------------------------------
 QString Application::getName()
