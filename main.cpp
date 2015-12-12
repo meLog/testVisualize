@@ -3,6 +3,7 @@
 #include "visualize.h"
 #include "chartdata.h"
 #include <QDebug>
+#include <QtAlgorithms>
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,8 @@ int main(int argc, char *argv[])
     //qDebug() << myVis.getChartDataVector()[4].getWhitelist()[0].getName() << myVis.getChartDataVector()[4].getWhitelist()[0].getTotalTime();
     //qDebug() << myVis.getChartDataVector()[4].getBlacklist()[0].getName() << myVis.getChartDataVector()[4].getBlacklist()[0].getTotalTime();
 
+
+    std::sort(myVis.getAppclicationsVector().begin(), myVis.getAppclicationsVector().end());
 
     qDebug() << "";
     qDebug() << "-----------------Ausgabe-----------------";
@@ -26,6 +29,9 @@ int main(int argc, char *argv[])
         qDebug() << "--------Whitelist--------";
         qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
         for(int j = 0; j < myVis.getChartDataVector()[i].getWhitelist().size(); j++){
+
+            std::sort(myVis.getChartDataVector()[i].getWhitelist().begin(), myVis.getChartDataVector()[i].getWhitelist().end());
+
             qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
                         "Name: " << myVis.getChartDataVector()[i].getWhitelist()[j].getName() <<
                         "Zeit: " << myVis.getChartDataVector()[i].getWhitelist()[j].getTotalTime();
@@ -34,6 +40,9 @@ int main(int argc, char *argv[])
         qDebug() << "--------Blacklist--------";
         qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
         for(int j = 0; j < myVis.getChartDataVector()[i].getBlacklist().size(); j++){
+
+            std::sort(myVis.getChartDataVector()[i].getBlacklist().begin(), myVis.getChartDataVector()[i].getBlacklist().end());
+
             qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
                         "Name: " << myVis.getChartDataVector()[i].getBlacklist()[j].getName() <<
                         "Zeit: " << myVis.getChartDataVector()[i].getBlacklist()[j].getTotalTime();

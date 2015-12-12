@@ -31,6 +31,8 @@ public:
     long getTotalTime();
     static long getTotalTimeAll();
 
+    bool operator<(const Application &a);
+
 signals:
 
 public slots:

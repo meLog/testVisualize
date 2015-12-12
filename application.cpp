@@ -42,3 +42,8 @@ long Application::getTotalTimeAll()
 {
     return _totalTimeAll;
 }
+
+bool Application::operator<(const Application &a)
+{
+    return a._totalTime < this->_totalTime;
+}

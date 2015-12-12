@@ -22,6 +22,7 @@ public:
 
     //Methodes
     void calcTimes();
+    bool operator<(const ApplicationData &a);
 
 signals:
 

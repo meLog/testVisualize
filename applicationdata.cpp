@@ -44,6 +44,11 @@ void ApplicationData::calcTimes()
 
 }
 
+bool ApplicationData::operator<(const ApplicationData &a)
+{
+    return a._totalTime < this->_totalTime;
+}
+
 
 
 
