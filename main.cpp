@@ -25,33 +25,34 @@ int main(int argc, char *argv[])
 
 
     for(int i = 0; i < myVis.getChartDataVector().size(); i++){
-
+        qDebug() << "";
         qDebug() << "--------Whitelist--------";
         qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getList(true).size();
         for(int j = 0; j < myVis.getChartDataVector()[i].getList(true).size(); j++){
 
             std::sort(myVis.getChartDataVector()[i].getList(true).begin(), myVis.getChartDataVector()[i].getList(true).end());
-
-            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
-                        "Name: " << myVis.getChartDataVector()[i].getList(true)[j].getName() <<
-                        "Zeit: " << myVis.getChartDataVector()[i].getList(true)[j].getTotalTime();
+            qDebug() << "";
+            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour();
+            qDebug() << "Name: " << myVis.getChartDataVector()[i].getList(true)[j].getName();
+            qDebug() << "Zeit: " << myVis.getChartDataVector()[i].getList(true)[j].getTotalTime();
         }
-
+        qDebug() << "";
         qDebug() << "--------Blacklist--------";
         qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getList(false).size();
         for(int j = 0; j < myVis.getChartDataVector()[i].getList(false).size(); j++){
 
             std::sort(myVis.getChartDataVector()[i].getList(false).begin(), myVis.getChartDataVector()[i].getList(false).end());
-
-            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
-                        "Name: " << myVis.getChartDataVector()[i].getList(false)[j].getName() <<
-                        "Zeit: " << myVis.getChartDataVector()[i].getList(false)[j].getTotalTime();
+            qDebug() << "";
+            qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour();
+            qDebug() << "Name: " << myVis.getChartDataVector()[i].getList(false)[j].getName();
+            qDebug() << "Zeit: " << myVis.getChartDataVector()[i].getList(false)[j].getTotalTime();
         }
     }
-    for (int i=0; i < myVis.getAppclicationsVector().count(); i++)
-        qDebug() << "Application: " << myVis.getAppclicationsVector()[i].getName() <<
-                    " Zeit: " << myVis.getAppclicationsVector()[i].getTotalTime();
-
+    for (int i=0; i < myVis.getAppclicationsVector().count(); i++){
+        qDebug() << "";
+        qDebug() << "Application: " << myVis.getAppclicationsVector()[i].getName();
+        qDebug() << " Zeit: " << myVis.getAppclicationsVector()[i].getTotalTime();
+    }
     return a.exec();
 }
 
