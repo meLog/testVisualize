@@ -37,8 +37,6 @@ void ApplicationData::calcTimes()
 
     tempTime = _startTime.secsTo(_endTime);
 
-    qDebug() << tempTime;
-
     _totalTime += tempTime;
     _totalTimeAll += tempTime;
 
