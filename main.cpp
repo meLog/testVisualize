@@ -52,6 +52,18 @@ int main(int argc, char *argv[])
         qDebug() << "";
         qDebug() << "Application: " << myVis.getAppclicationsVector()[i].getName();
         qDebug() << " Zeit: " << myVis.getAppclicationsVector()[i].getTotalTime();
+
+        int vectorTime = 0;
+
+        for (int j = 0; j < myVis.getChartDataVector().size(); j++) {
+            for (int k = 0; k <= 1; k++) {
+                for (int l = 0; l < myVis.getChartDataVector()[j].getList(k).size(); l++){
+                        if (myVis.getChartDataVector()[j].getList(k)[l].getName() == myVis.getAppclicationsVector()[i].getName())
+                            vectorTime += myVis.getChartDataVector()[j].getList(k)[l].getTotalTime();
+                }
+            }
+        }
+        qDebug() << " Zeit aus Vectoren: " << vectorTime;
     }
     return a.exec();
 }

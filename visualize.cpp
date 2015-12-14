@@ -87,7 +87,7 @@ void Visualize::handleDataFromString(QString filepath)
             _applications[pos].addTotalTime(_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getStartTime().secsTo(tempTime));
             qDebug() << "application vector count after " << _applications.count();
 
-            qDebug() << "Prozess existiert bereits";
+            qDebug() << _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getName() << " Prozess existiert bereits";
             if(_chartDataObjects[_lastChangeChart].getHour() == tempHour){
                 qDebug() << "Gleiche Stunde - Whitelist - ohne Ueberlauf";
                 qDebug() << _chartDataObjects[_lastChangeChart].getHour() << "h - Whitelist: " << _lastChange << " - Nummer in Liste: " << _lastChangeApp;
@@ -96,13 +96,18 @@ void Visualize::handleDataFromString(QString filepath)
             } else {
                 qDebug() << "Verrechnen mit Nächste Stunde Whitelist";
                 hourDifference = tempHour - _chartDataObjects[_lastChangeChart].getHour();
+                QTime tempTest(_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].getStartTime().hour() + 1, 0, 0);
+                _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].setEndTime(tempTest);
                 for(int i = 1; i <= hourDifference; i++){
                     _calcHour = tempHour - hourDifference + i;
                     calcOverflow(_chartDataObjects[_lastChangeChart].getList(_lastChange));
-                    QTime test(_calcHour + 1, 0, 0);
+                    QTime test(_calcHour, 59, 59);
                     if (tempTime < test) {
+                        qDebug() << _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].getStartTime();
                         _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
                     } else {
+                        test = test.addSecs(1);
+                        qDebug() << _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].getStartTime();
                         _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].setEndTime(test);
                     }
                 }
