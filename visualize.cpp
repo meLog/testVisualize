@@ -99,8 +99,14 @@ void Visualize::handleDataFromString(QString filepath)
                 for(int i = 1; i <= hourDifference; i++){
                     _calcHour = tempHour - hourDifference + i;
                     calcOverflow(_chartDataObjects[_lastChangeChart].getList(_lastChange));
+                    QTime test(_calcHour + 1, 0, 0);
+                    if (tempTime < test) {
+                        _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
+                    } else {
+                        _chartDataObjects[_chartRef].getList(_lastChange)[_lastChangeApp].setEndTime(test);
+                    }
                 }
-                _chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
+                //_chartDataObjects[_lastChangeChart].getList(_lastChange)[_lastChangeApp].setEndTime(tempTime);
             }
             _lastChangeChart = _chartRef;
             _lastChangeApp = tempChart.getList(_lastChange).size()-1;
@@ -168,7 +174,10 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
     ApplicationData tempApp;
     QTime fullHour;
 
+
     fullHour.setHMS(_calcHour, 0, 0);
+
+    //data[_lastChangeApp].setEndTime(fullHour);
 
     tempApp.setName(data[_lastChangeApp].getName());
     tempApp.setUrl(data[_lastChangeApp].getUrl());
@@ -184,6 +193,7 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
 
     _chartDataObjects.append(tempChart);
     _chartRef = _chartDataObjects.size()-1;
+    _lastChangeApp = 0;
 
 }
 
