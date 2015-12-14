@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
     Visualize myVis;
     //myVis.handleDataFromString("C:\\Users\\Rick\\Google Drive\\FH Sachen\\5. Semester\\EMS\\ricks code\\maitime-20151026.json");
     myVis.handleDataFromString("C:\\maitime-20151026.json");
-    //qDebug() << myVis.getChartDataVector()[4].getWhitelist()[0].getName() << myVis.getChartDataVector()[4].getWhitelist()[0].getTotalTime();
-    //qDebug() << myVis.getChartDataVector()[4].getBlacklist()[0].getName() << myVis.getChartDataVector()[4].getBlacklist()[0].getTotalTime();
+    //qDebug() << myVis.getChartDataVector()[4].getList(true)[0].getName() << myVis.getChartDataVector()[4].getList(true)[0].getTotalTime();
+    //qDebug() << myVis.getChartDataVector()[4].getList(false)[0].getName() << myVis.getChartDataVector()[4].getList(false)[0].getTotalTime();
 
 
     std::sort(myVis.getAppclicationsVector().begin(), myVis.getAppclicationsVector().end());
@@ -27,25 +27,25 @@ int main(int argc, char *argv[])
     for(int i = 0; i < myVis.getChartDataVector().size(); i++){
 
         qDebug() << "--------Whitelist--------";
-        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
-        for(int j = 0; j < myVis.getChartDataVector()[i].getWhitelist().size(); j++){
+        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getList(true).size();
+        for(int j = 0; j < myVis.getChartDataVector()[i].getList(true).size(); j++){
 
-            std::sort(myVis.getChartDataVector()[i].getWhitelist().begin(), myVis.getChartDataVector()[i].getWhitelist().end());
+            std::sort(myVis.getChartDataVector()[i].getList(true).begin(), myVis.getChartDataVector()[i].getList(true).end());
 
             qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
-                        "Name: " << myVis.getChartDataVector()[i].getWhitelist()[j].getName() <<
-                        "Zeit: " << myVis.getChartDataVector()[i].getWhitelist()[j].getTotalTime();
+                        "Name: " << myVis.getChartDataVector()[i].getList(true)[j].getName() <<
+                        "Zeit: " << myVis.getChartDataVector()[i].getList(true)[j].getTotalTime();
         }
 
         qDebug() << "--------Blacklist--------";
-        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getWhitelist().size();
-        for(int j = 0; j < myVis.getChartDataVector()[i].getBlacklist().size(); j++){
+        qDebug() << "Anzahl Prozesse: " << myVis.getChartDataVector()[i].getList(false).size();
+        for(int j = 0; j < myVis.getChartDataVector()[i].getList(false).size(); j++){
 
-            std::sort(myVis.getChartDataVector()[i].getBlacklist().begin(), myVis.getChartDataVector()[i].getBlacklist().end());
+            std::sort(myVis.getChartDataVector()[i].getList(false).begin(), myVis.getChartDataVector()[i].getList(false).end());
 
             qDebug() << "Stunde: " << myVis.getChartDataVector()[i].getHour() <<
-                        "Name: " << myVis.getChartDataVector()[i].getBlacklist()[j].getName() <<
-                        "Zeit: " << myVis.getChartDataVector()[i].getBlacklist()[j].getTotalTime();
+                        "Name: " << myVis.getChartDataVector()[i].getList(false)[j].getName() <<
+                        "Zeit: " << myVis.getChartDataVector()[i].getList(false)[j].getTotalTime();
         }
     }
     for (int i=0; i < myVis.getAppclicationsVector().count(); i++)

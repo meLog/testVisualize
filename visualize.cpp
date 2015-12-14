@@ -176,13 +176,14 @@ void Visualize::calcOverflow(QVector<ApplicationData> &data)
 
     qDebug() << "Neue Stunde - Whitelist/Blacklist - Ueberlauf";
     tempChart.setHour(_calcHour);
-    _chartDataObjects.append(tempChart);
 
     qDebug() << "Geschriebene Zeit: " << _calcHour;
-    _chartRef = _chartDataObjects.size()-1;
 
     qDebug() << "Neues Objekt - Whitelist/Blacklist - Ueberlauf";
     tempChart.getList(_lastChange).append(tempApp);
+
+    _chartDataObjects.append(tempChart);
+    _chartRef = _chartDataObjects.size()-1;
 
 }
 
